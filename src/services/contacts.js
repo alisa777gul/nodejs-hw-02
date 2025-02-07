@@ -54,7 +54,10 @@ export const getContactById = async (contactId, userId) => {
 };
 
 export const createContact = async (payload, userId) => {
-  const contact = await ContactsCollection.create({ ...payload, userId });
+  const contact = await ContactsCollection.create({
+    ...payload,
+    userId,
+  });
   return contact;
 };
 
