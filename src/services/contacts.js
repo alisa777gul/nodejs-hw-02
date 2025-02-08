@@ -15,6 +15,9 @@ export const getAllContacts = async ({
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
+  const totalUserContacts = await ContactsCollection.countDocuments({ userId });
+  const hasAnyContacts = totalUserContacts > 0;
+
   const contactsQuery = ContactsCollection.find({ userId });
 
   if (filter.type !== undefined) {
@@ -29,7 +32,7 @@ export const getAllContacts = async ({
     .merge(contactsQuery)
     .countDocuments();
 
-  validatePagination(contactsCount, perPage, page);
+  validatePagination(contactsCount, perPage, page, hasAnyContacts);
 
   const contacts = await ContactsCollection.find({ userId })
     .merge(contactsQuery)
@@ -48,7 +51,7 @@ export const getAllContacts = async ({
 export const getContactById = async (contactId, userId) => {
   const contact = await ContactsCollection.findOne({ _id: contactId, userId });
   if (!contact) {
-    throw createHttpError(404, 'Contact not found or unauthorized');
+    throw createHttpError(404, 'Contact not found');
   }
   return contact;
 };
@@ -69,7 +72,7 @@ export const updateContact = async (contactId, payload, userId) => {
   );
 
   if (!contact) {
-    throw createHttpError(404, 'Contact not found or unauthorized');
+    throw createHttpError(404, 'Contact not found');
   }
 
   return contact;
@@ -81,7 +84,7 @@ export const deleteContact = async (contactId, userId) => {
     userId,
   });
   if (!contact) {
-    throw createHttpError(404, 'Contact not found or unauthorized');
+    throw createHttpError(404, 'Contact not found');
   }
   return contact;
 };

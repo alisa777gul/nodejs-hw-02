@@ -30,7 +30,6 @@ export const createContactSchema = Joi.object({
   isFavourite: Joi.boolean().messages({
     'boolean.base': 'Favourite must be a boolean',
   }),
-  userId: Joi.string().required(),
 });
 
 export const updateContactSchema = Joi.object({

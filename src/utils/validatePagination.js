@@ -1,6 +1,15 @@
 import createHttpError from 'http-errors';
 
-export const validatePagination = (count, perPage, page) => {
+export const validatePagination = (
+  count,
+  perPage,
+  page,
+  alreadyHasContacts,
+) => {
+  if (!alreadyHasContacts) {
+    return;
+  }
+
   const totalPages = Math.ceil(count / perPage);
   if (totalPages < page || page < 1) {
     throw createHttpError(

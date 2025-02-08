@@ -24,6 +24,12 @@ export const getContactsController = async (req, res, next) => {
       userId: req.user._id,
     });
 
+    if (contacts.totalItems === 0) {
+      return res.status(200).json({
+        message: 'No contacts yet',
+      });
+    }
+
     res.status(200).json({
       status: 200,
       message: 'Successfully found contacts!',
