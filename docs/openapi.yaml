@@ -1,0 +1,78 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Contacts manager
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: Веб-додаток був створений для зберігання і зміни контактів.
+
+servers:
+  - url: http://localhost:3000
+  - url: https://example.com/api/v1
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Contacts
+    description: Operations about contacts.
+  - name: Auth
+    description: Auth operations.
+
+paths:
+  /contacts:
+    get:
+      security:
+        - bearerAuth: []
+      $ref: ../swagger/paths/contacts/get.yaml
+    post:
+      security:
+        - bearerAuth: []
+      $ref: ../swagger/paths/contacts/post.yaml
+
+  /contacts/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      $ref: ../swagger/paths/contacts/{id}/get.yaml
+    patch:
+      security:
+        - bearerAuth: []
+      $ref: ../swagger/paths/contacts/{id}/patch.yaml
+    delete:
+      security:
+        - bearerAuth: []
+      $ref: ../swagger/paths/contacts/{id}/delete.yaml
+
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register-post.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login-post.yaml
+  /auth/refresh:
+    post:
+      security:
+        - bearerAuth: []
+      $ref: ../swagger/paths/auth/refresh-post.yaml
+  /auth/logout:
+    post:
+      security:
+        - bearerAuth: []
+      $ref: ../swagger/paths/auth/logout-post.yaml
+  /auth/send-reset-email:
+    post:
+      $ref: ../swagger/paths/auth/send-reset-email-post.yaml
+  /auth/reset-password:
+    post:
+      $ref: ../swagger/paths/auth/reset-password-post.yaml
+
+components:
+  schemas:
+    user:
+      $ref: ../swagger/components/schemas/users.yaml
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
