@@ -58,4 +58,4 @@ responses:
                   type: string
                   example: 'user@gmail.com'
   '409':
-    $ref: ../../components/responses/409.yaml
+    $ref: '../../components/responses/409.yaml'
